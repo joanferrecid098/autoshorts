@@ -52,3 +52,43 @@ const logsObserver = new MutationObserver(() => {
 logsObserver.observe($(".production-logs").get(0), {
     childList: true
 });
+
+$("#upload-form").on("submit", (e) => {
+
+    const shortDetails = {
+        title: $("#title").val(),
+        description: $("#description").val(),
+        file: $("#file").val()
+    };
+
+    if ( !shortDetails.title || shortDetails.title.length < 1 ) return alert("Title hasn't been set.");
+    if ( shortDetails.title.length > 100 ) return alert("Title has to be shorter than 100 characters.");
+
+    if ( !shortDetails.description || shortDetails.description.length < 1 ) return alert("Description hasn't been set.");
+    if ( shortDetails.description.length > 5000 ) return alert("Description has to be shorter than 5000 characters.");
+
+    const socket = io({ reconnection: false });
+
+    socket.on("connect", () => {
+        $(".production-logs").css("display", "flex");
+        $(".production-logs").html("<span>Spawning Uploading process...</span>");
+
+        socket.emit(
+            "upload",
+            shortDetails
+        );
+
+        socket.on("upload info", message => {
+            $(".production-logs").append(`<span>${message}</span>`);
+        });
+
+        socket.on("upload done", filename => {
+            $(".short-configuration").css("display", "flex");
+            $(".short-filename").html(filename);
+            $(".short-preview").attr("src", `/media/${filename}`);
+        });
+    });
+
+    e.preventDefault();
+
+});

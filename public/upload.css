@@ -1,0 +1,10 @@
+.upload-popup {
+    background-color: var(--secondary-color-darker2);
+    flex-direction: column;
+    display: flex;
+}
+
+.upload-input {
+    box-sizing: border-box;
+    width: 100%;
+}
