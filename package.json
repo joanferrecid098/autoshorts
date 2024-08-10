@@ -5,6 +5,7 @@
         "start": "tsc && node build/index.js"
     },
     "devDependencies": {
+        "@types/gapi": "^0.0.47",
         "@types/jquery": "^3.5.29",
         "@types/lodash": "^4.17.0",
         "@types/node": "^20.11.26",
@@ -16,6 +17,7 @@
         "express": "^4.19.2",
         "lodash": "^4.17.21",
         "socket.io": "^4.7.5",
+        "uninstall": "^0.0.0",
         "uuid": "^9.0.1"
     }
 }

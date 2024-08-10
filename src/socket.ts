@@ -3,11 +3,12 @@ import { Server as HTTPServer } from "http";
 import { v4 as generateUUID } from "uuid";
 import { existsSync, mkdirSync } from "fs";
 
-import { ShortType } from "./lib/types/short";
+import { ShortType, ShortDetails } from "./lib/types/short";
 import { ClientboundEvent, ServerboundEvent } from "./lib/types/socket";
 
 import { produceTriviaShort } from "./lib/videos/trivia";
 import { producePuzzleShort } from "./lib/videos/puzzle";
+import { uploadShort } from "./upload";
 
 export function createSocketServer(httpServer: HTTPServer) {
 
@@ -24,6 +25,20 @@ export function createSocketServer(httpServer: HTTPServer) {
                 socket.emit(
                     ClientboundEvent.RENDER_INFO,
                     "Short rendering process failed."
+                );
+            }
+        });
+
+        socket.on(ServerboundEvent.UPLOAD_SHORT, (shortDetails?: ShortDetails) => {
+            if (!shortDetails) return;
+            console.log(`received a request to upload a short.`);
+
+            try {
+                uploadShort(shortDetails);
+            } catch {
+                socket.emit(
+                    ClientboundEvent.UPLOAD_INFO,
+                    "Short uploading process failed."
                 );
             }
         });
