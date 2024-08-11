@@ -1,6 +1,7 @@
+import { Socket } from "socket.io";
 import { ShortDetails } from "./lib/types/short";
 
-export function uploadShort(shortDetails: ShortDetails) {
+export function uploadShort(shortDetails: ShortDetails, socket: Socket) {
 	console.log(shortDetails.title);
 	console.log(shortDetails.description);
 

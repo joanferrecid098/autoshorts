@@ -34,7 +34,7 @@ export function createSocketServer(httpServer: HTTPServer) {
             console.log(`received a request to upload a short.`);
 
             try {
-                uploadShort(shortDetails);
+                uploadShort(shortDetails, socket);
             } catch {
                 socket.emit(
                     ClientboundEvent.UPLOAD_INFO,

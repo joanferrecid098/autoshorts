@@ -39,6 +39,7 @@ $(".produce-video").on("click", () => {
             $(".short-configuration").css("display", "flex");
             $(".short-filename").html(filename);
             $(".short-preview").attr("src", `/media/${filename}`);
+            $("#file").val(filename);
         });
     });
 
@@ -67,11 +68,13 @@ $("#upload-form").on("submit", (e) => {
     if ( !shortDetails.description || shortDetails.description.length < 1 ) return alert("Description hasn't been set.");
     if ( shortDetails.description.length > 5000 ) return alert("Description has to be shorter than 5000 characters.");
 
+    if ( !shortDetails.file ) return alert("Short must be created before uploading.");
+
     const socket = io({ reconnection: false });
 
     socket.on("connect", () => {
         $(".production-logs").css("display", "flex");
-        $(".production-logs").html("<span>Spawning Uploading process...</span>");
+        $(".production-logs").html("<span>Starting Uploading process...</span>");
 
         socket.emit(
             "upload",
@@ -91,4 +94,8 @@ $("#upload-form").on("submit", (e) => {
 
     e.preventDefault();
 
+});
+
+$(".popup-btn").on("click", () => {
+    $(".upload-popup").toggleClass("hidden");
 });

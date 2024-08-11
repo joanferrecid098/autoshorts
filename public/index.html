@@ -41,16 +41,17 @@
             <span class="short-filename"></span>
 
             <video class="short-preview" controls></video>
+            <button class="popup-btn">UPLOAD SHORT</button>
         </div>
 
         <button class="produce-video btn">PRODUCE SHORT</button>
 
-        <div class="upload-popup">
+        <div class="upload-popup hidden">
             <h3>Upload to YouTube</h3>
             <form id="upload-form">
                 <input class="upload-input" id="title" placeholder="Video title" type="text" required="yes">
                 <input class="upload-input" id="description" placeholder="Video Description" type="text" required="yes">
-                <input type="hidden" id="file" name="file" value="test-video.mp4">
+                <input type="hidden" id="file" required="yes" value="">
                 <input class="upload-input" type="submit" value="UPLOAD">
             </form>
         </div>
